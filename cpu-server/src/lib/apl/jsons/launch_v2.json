@@ -1,0 +1,238 @@
+{
+    "type": "APL",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.6.0"
+        }
+    ],
+    "resources": [],
+    "styles": {
+        "questionFrame": {
+            "values": [
+                {
+                    "height": "100%",
+                    "padding": "20dp"
+                }
+            ]
+        },
+        "question": {
+            "values": [
+                {
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "height": "100%",
+                    "width": "100%",
+                    "color": "rgba(255,255,255,0.55)",
+                    "fontFamily": "Bookerly",
+                    "fontSize": "@fontSizeLarge"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeMedium}",
+                    "fontSize": "@fontSizeMedium"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "fontSize": "@fontSizeSmall"
+                }
+            ]
+        },
+        "centerHint": {
+            "values": [
+                {
+                    "width": "100%",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "fontWeight": "bold",
+                    "fontSize": "@fontSizeXLarge"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "fontSize": "@fontSizeMedium"
+                }
+            ]
+        }
+    },
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "data"
+        ],
+        "items": [
+            {
+                "when": "${@viewportProfile == @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "colorOverlay": true,
+                        "backgroundImageSource": "${data.backgroundImage}"
+                    },
+                    {
+                        "type": "Text",
+                        "height": "100%",
+                        "textAlignVertical": "center",
+                        "textAlign": "center",
+                        "fontFamily": "Amazon Ember Display",
+                        "fontSize": "@fontSizeXLarge",
+                        "text": "<b>Try</b><br><i>\"Alexa, how to cook Oreo Cookies.\"</i>"
+                    }
+                ]
+            },
+            {
+                "when": "${@viewportProfile != @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "padding": "24dp",
+                "direction": "column",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "colorOverlay": true,
+                        "backgroundImageSource": "${data.backgroundImage}"
+                    },
+                    {
+                        "type": "Container",
+                        "height": "30%",
+                        "width": "100%",
+                        "direction": "row",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "width": "33%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": "${data.suggested[0]}"
+                                }
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "34%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": "${data.suggested[1]}"
+                                }
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "33%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": "${data.suggested[2]}"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Container",
+                        "height": "40%",
+                        "width": "100%",
+                        "direction": "row",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "width": "20%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": ""
+                                }
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "60%",
+                                "height": "100%",
+                                "item": {
+                                    "type": "Container",
+                                    "width": "100%",
+                                    "height": "100%",
+                                    "justifyContent": "center",
+                                    "alignItems": "center",
+                                    "items": [
+                                        {
+                                            "type": "Text",
+                                            "style": "centerHint",
+                                            "text": "${data.centerText}"
+                                        },
+                                        {
+                                            "when": "${data.special.hasSpecial == true}",
+                                            "type": "AlexaButton",
+                                            "paddingTop": "20dp",
+                                            "buttonStyle": "ingress",
+                                            "buttonText": "${data.special.buttonText}",
+                                            "primaryAction": "${data.special.primaryAction}",
+                                            "alignSelf": "center"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "20%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Container",
+                        "height": "30%",
+                        "width": "100%",
+                        "direction": "row",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "width": "33%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": "${data.suggested[3]}"
+                                }
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "34%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": "${data.suggested[4]}"
+                                }
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "33%",
+                                "style": "questionFrame",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "question",
+                                    "text": "${data.suggested[5]}"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

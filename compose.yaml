@@ -1,0 +1,52 @@
+services:
+  cpu-server:
+    build:
+      context: cpu-server/
+    volumes:
+      - transformers-cache:/.cache/huggingface/
+      - torch-cache:/.cache/torch/
+    links:
+      - "gpu-server:gpuserver"
+    ports:
+      - "8001:8000"
+
+  gpu-server:
+    build:
+      context: gpu-server/
+    ports:
+      - "8002:8000"
+    volumes:
+      - transformers-cache:/.cache/huggingface/
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  data-studio:
+    build:
+      context: data-studio/
+    ports:
+      - "8003:8000"
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+
+volumes:
+  torch-cache:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ~/.cache/torch/
+  transformers-cache:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ~/.cache/huggingface/

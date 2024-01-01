@@ -1,0 +1,195 @@
+{
+	"document": {
+		"type": "APL",
+		"version": "1.6",
+		"import": [
+			{
+				"name": "alexa-layouts",
+				"version": "1.5.0"
+			}
+		],
+		"settings": {
+			"idleTimeout": 60000
+		},
+		"resources": [
+			{
+				"when": "${@viewportProfile != @hubRoundSmall}",
+				"boolean": {
+					"hintShow": true
+				}
+			},
+			{
+				"strings": {
+					"midContainerHeight": "65vh",
+					"boxHeight": "100%",
+					"headerHeight": "144dp"
+				}
+			},
+			{
+				"when": "${@viewportProfile == @hubLandscapeMedium}",
+				"strings": {
+					"midContainerHeight": "386dp",
+					"boxHeight": "100%",
+					"headerHeight": "110dp"
+				}
+			},
+			{
+				"when": "${@viewportProfile == @hubLandscapeSmall}",
+				"strings": {
+					"midContainerHeight": "294dp",
+					"boxHeight": "100%",
+					"headerHeight": "100dp"
+				}
+			},
+			{
+				"when": "${@viewportProfile == @hubLandscapeXLarge}",
+				"strings": {
+					"midContainerHeight": "790dp",
+					"boxHeight": "100%",
+					"headerHeight": "150dp"
+				}
+			}
+		],
+		"graphics": {
+			"line": {
+				"type": "AVG",
+				"version": "1.2",
+				"height": 3,
+				"width": 1600,
+				"items": {
+					"type": "path",
+					"fill": "white",
+					"stroke": "white",
+					"strokeWidth": 3,
+					"pathData": "M 0 0 L 1600 0 L 1600 3 L 0 3 z"
+				}
+			}
+		},
+		"mainTemplate": {
+			"parameters": [
+				"templateData"
+			],
+			"items": {
+				"type": "Container",
+				"height": "100vh",
+				"width": "100vw",
+				"items": [
+					{
+						"type": "AlexaBackground",
+						"backgroundAlign": "${templateData.background.backgroundAlign}",
+						"backgroundBlur": "${templateData.background.backgroundBlur}",
+						"backgroundColor": "${templateData.background.backgroundColor}",
+						"backgroundImageSource": "${templateData.background.backgroundImageSource}",
+						"backgroundScale": "${templateData.background.backgroundScale}",
+						"backgroundVideoSource": "${templateData.background.backgroundVideoSource}",
+						"colorOverlay": "${templateData.background.backgroundColorOverlay}",
+						"overlayGradient": "${templateData.background.backgroundOverlayGradient}",
+						"overlayNoise": "${templateData.background.backgroundOverlayNoise}",
+						"videoAudioTrack": "${templateData.background.backgroundVideoAudioTrack}",
+						"videoAutoPlay": "${templateData.background.backgroundVideoAutoPlay}"
+					},
+					{
+						"type": "AlexaHeader",
+						"headerAttributionImage": "${templateData.header.headerAttributionImage}",
+						"headerAttributionOpacity": "${templateData.header.headerAttributionOpacity}",
+						"headerAttributionPrimacy": "${templateData.header.headerAttributionPrimacy}",
+						"headerAttributionText": "${templateData.header.headerAttributionText}",
+						"headerBackButton": "${templateData.header.headerBackButton}",
+						"headerBackButtonAccessibilityLabel": "${templateData.header.headerBackButtonAccessibilityLabel}",
+						"headerBackButtonCommand": "${templateData.header.headerBackButtonCommand}",
+						"headerBackgroundColor": "${templateData.header.headerBackgroundColor}",
+						"headerDivider": "${templateData.header.headerDivider}",
+						"headerSubtitle": "${templateData.header.headerSubtitle}",
+						"headerTitle": "${templateData.header.headerTitle}",
+						"theme": "${templateData.theme}",
+						"layoutDirection": "${templateData.layoutDirection}",
+						"height": "@headerHeight"
+					},
+					{
+						"type": "Container",
+						"width": "100vw",
+						"height": "@midContainerHeight",
+						"alignItems": "center",
+						"justifyContent": "center",
+						"items": [
+							{
+								"type": "Text",
+								"paddingBottom": "30dp",
+								"text": "${templateData.chatText}",
+								"textAlign": "center",
+								"maxLines": 4,
+								"width": "65%"
+							},
+							{
+								"type": "VectorGraphic",
+								"source": "line",
+								"width": "75%",
+								"when": "${templateData.divider}"
+							}
+						]
+					},
+					{
+						"type": "AlexaFooter",
+						"hintText": "${templateData.properties.transformedHintText}",
+						"when": "${@hintShow}"
+					}
+				]
+			}
+		}
+	},
+	"type": "Alexa.Presentation.APL.RenderDocument",
+	"token": "ChatDocumentToken",
+	"datasources": {
+		"templateData": {
+			"header": {
+				"headerAttributionImage": "",
+				"headerAttributionOpacity": 0.8,
+				"headerAttributionPrimacy": true,
+				"headerAttributionText": "",
+				"headerBackButton": false,
+				"headerBackButtonAccessibilityLabel": "",
+				"headerBackButtonCommand": null,
+				"headerBackgroundColor": "transparent",
+				"headerDivider": false,
+				"headerSubtitle": "",
+				"headerTitle": "ALEXA PRIZE"
+			},
+			"background": {
+				"backgroundAlign": "end",
+				"backgroundBlur": false,
+				"backgroundColor": null,
+				"backgroundImageSource": "https://d1vi0xa8uafg33.cloudfront.net/Background.png",
+				"backgroundScale": "best-fill",
+				"backgroundVideoSource": "",
+				"backgroundColorOverlay": false,
+				"backgroundOverlayGradient": false,
+				"backgroundOverlayNoise": false,
+				"backgroundVideoAudioTrack": "foreground",
+				"backgroundVideoAutoPlay": false
+			},
+			"properties": {
+				"hintToAdd": "let's talk about something else",
+				"ChatSsml": "<speak>How are you doing?</speak>"
+			},
+			"transformers": [
+				{
+					"inputPath": "hintToAdd",
+					"transformer": "textToHint",
+					"outputName": "transformedHintText"
+				},
+				{
+					"inputPath": "ChatSsml",
+					"outputName": "chatSpeech",
+					"transformer": "ssmlToSpeech"
+				},
+				{
+					"inputPath": "ChatSsml",
+					"outputName": "chatText",
+					"transformer": "ssmlToText"
+				}
+			],
+			"chatText": "How are you doing?",
+			"divider": true
+		}
+	}
+}

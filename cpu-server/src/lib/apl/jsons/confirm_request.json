@@ -1,0 +1,562 @@
+{
+	"type": "APL",
+	"settings": {},
+	"theme": "dark",
+	"import": [
+		{
+			"name": "alexa-layouts",
+			"version": "1.6.0"
+		},
+		{
+			"name": "alexa-icon",
+			"version": "1.0.0"
+		}
+	],
+	"resources": [],
+	"styles": {
+		"userInputText": {
+			"values": [
+				{
+					"textAlign": "center",
+					"fontStyle": "italic",
+					"fontFamily": "Bookerly",
+					"fontWeight": "normal",
+					"height": "80%",
+					"textAlignVertical": "center"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeXLarge"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeXLarge"
+				}
+			]
+		},
+		"captionText": {
+			"values": [
+				{
+					"textAlign": "left",
+					"textAlignVertical": "center",
+					"color": "white",
+					"fontSize": "@fontSizeMedium"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeXLarge"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeXLarge"
+				}
+			]
+		},
+		"pill": {
+			"values": [
+				{
+					"backgroundColor": "rgba(255,255,255,0.1)",
+					"paddingLeft": "12dp",
+					"paddingRight": "12dp",
+					"paddingBottom": "4dp",
+					"paddingTop": "4dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"paddingLeft": "18dp",
+					"paddingRight": "18dp",
+					"paddingBottom": "8dp",
+					"paddingTop": "8dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"paddingLeft": "18dp",
+					"paddingRight": "18dp",
+					"paddingBottom": "8dp",
+					"paddingTop": "8dp"
+				}
+			]
+		},
+		"pillText": {
+			"values": [
+				{
+					"fontSize": "24dp",
+					"textAlign": "center"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeMedium"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeLarge"
+				}
+			]
+		},
+		"pillExclude": {
+			"values": [
+				{
+					"backgroundColor": "rgba(255,0,0,0.1)",
+					"paddingLeft": "12dp",
+					"paddingRight": "12dp",
+					"paddingBottom": "4dp",
+					"paddingTop": "4dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"paddingLeft": "18dp",
+					"paddingRight": "18dp",
+					"paddingBottom": "8dp",
+					"paddingTop": "8dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"paddingLeft": "18dp",
+					"paddingRight": "18dp",
+					"paddingBottom": "8dp",
+					"paddingTop": "8dp"
+				}
+			]
+		},
+		"pillTextExclude": {
+			"values": [
+				{
+					"fontSize": "24dp",
+					"textAlign": "center"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeMedium"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeLarge"
+				}
+			]
+		},
+		"listGrid": {
+			"values": [
+				{
+					"paddingTop": "16dp",
+					"paddingRight": "24dp",
+					"paddingLeft": "24dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"paddingTop": "16dp",
+					"paddingRight": "24dp",
+					"paddingLeft": "24dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"paddingTop": "24dp",
+					"paddingRight": "24dp",
+					"paddingLeft": "24dp"
+				}
+			]
+		},
+		"rightDivider": {
+			"values": [
+				{
+					"paddingTop": "16dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"paddingTop": "24dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"paddingTop": "24dp"
+				}
+			]
+		}
+	},
+	"onMount": [],
+	"graphics": {},
+	"commands": {},
+	"layouts": {},
+	"mainTemplate": {
+		"parameters": [
+			"data"
+		],
+		"items": [
+			{
+				"when": "${@viewportProfile == @hubRoundSmall}",
+				"type": "Container",
+				"width": "100%",
+				"height": "100%",
+				"items": [
+					{
+						"type": "AlexaBackground"
+					},
+					{
+						"type": "Container",
+						"height": "100%",
+						"width": "100%",
+						"items": [
+							{
+								"height": "60%",
+								"width": "80%",
+								"alignSelf": "center",
+								"type": "Text",
+								"textAlign": "center",
+								"textAlignVertical": "bottom",
+								"paddingBottom": "0",
+								"text": "You said:<br><i>\"${data.userInput}\"</i>"
+							},
+							{
+								"type": "Container",
+								"height": "40%",
+								"width": "100%",
+								"direction": "column",
+								"justifyContent": "center",
+								"alignItems": "center",
+								"items": [
+									{
+										"type": "AlexaButton",
+										"buttonStyle": "egress",
+										"alignSelf": "center",
+										"buttonText": "${data.button1Text}",
+										"primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": "QUERY_EDIT_RESPONDER"
+											}
+										]
+									},
+									{
+										"type": "AlexaButton",
+										"buttonText": "${data.button2Text}",
+										"buttonStyle": "egress",
+										"alignSelf": "center",
+										"primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": ["RECIPE_QUERY_RESPONDER", "WIKIHOW_QUERY_RESPONDER"]
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"when": "${@viewportProfile != @hubRoundSmall}",
+				"type": "Container",
+				"width": "100%",
+				"height": "100%",
+				"direction": "row",
+				"items": [
+					{
+						"type": "AlexaBackground"
+					},
+					{
+						"type": "Container",
+						"width": "50%",
+						"height": "100%",
+						"alignItems": "center",
+						"justifyContent": "spaceBetween",
+						"padding": "24dp",
+						"items": [
+							{
+								"type": "Text",
+								"text": "\"${data.userInput}\"",
+								"style": "userInputText"
+							},
+							{
+								"type": "Container",
+								"paddingBottom": "16dp",
+								"direction": "row",
+								"alignItems": "center",
+								"items": [
+									{
+										"type": "AlexaButton",
+										"buttonStyle": "egress",
+										"buttonText": "${data.button1Text}",
+										"spacing": "@spacingSmall",
+										"primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": "QUERY_EDIT_RESPONDER"
+											}
+										]
+									},
+									{
+										"type": "AlexaButton",
+										"buttonText": "${data.button2Text}",
+										"buttonStyle": "egress",
+										"spacing": "@spacingSmall",
+										"primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": ["RECIPE_QUERY_RESPONDER", "WIKIHOW_QUERY_RESPONDER"]
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"type": "ScrollView",
+						"width": "50%",
+						"height": "100%",
+						"items": [
+							{
+								"type": "Frame",
+								"backgroundColor": "rgba(0,0,0,0.2)",
+								"width": "100%",
+								"minHeight": "100%",
+								"item": {
+									"type": "Container",
+									"width": "100%",
+									"minHeight": "100%",
+									"direction": "column",
+									"justifyContent": "center",
+									"paddingBottom": "24dp",
+									"items": [
+										{
+											"type": "Container",
+											"style": "listGrid",
+											"items": [
+												{
+													"type": "Text",
+													"text": "You requested help with",
+													"style": "captionText"
+												},
+												{
+													"type": "Container",
+													"direction": "row",
+													"numbered": true,
+													"wrap": "wrap",
+													"data": "${data.requestType}",
+													"items": [
+														{
+															"type": "Frame",
+															"paddingTop": "8dp",
+															"paddingRight": "8dp",
+															"item": {
+																"type": "Frame",
+																"style": "pill",
+																"item": {
+																	"type": "Text",
+																	"text": "${data}",
+																	"style": "pillText"
+																}
+															}
+														}
+													]
+												},
+												{
+													"type": "AlexaDivider",
+													"style": "rightDivider"
+												}
+											]
+										},
+										{
+											"type": "Container",
+											"style": "listGrid",
+											"items": [
+												{
+													"type": "Text",
+													"text": "Ingredients & Tools",
+													"style": "captionText"
+												},
+												{
+													"type": "Container",
+													"direction": "row",
+													"numbered": true,
+													"wrap": "wrap",
+													"data": "${data.recipe.ingredientsAndTools.include}",
+													"items": [
+														{
+															"type": "Frame",
+															"paddingTop": "8dp",
+															"paddingRight": "8dp",
+															"item": {
+																"type": "Frame",
+																"style": "pill",
+																"item": {
+																	"text": "${data}",
+																	"fontWeight": "normal",
+																	"type": "Text",
+																	"style": "pillText"
+																}
+															}
+														}
+													]
+												},
+												{
+													"type": "Container",
+													"direction": "row",
+													"numbered": true,
+													"wrap": "wrap",
+													"data": "${data.recipe.ingredientsAndTools.exclude}",
+													"items": [
+														{
+															"type": "Frame",
+															"paddingTop": "8dp",
+															"paddingRight": "8dp",
+															"item": {
+																"type": "Frame",
+																"style": "pillExclude",
+																"item": {
+																	"text": "${data}",
+																	"fontWeight": "normal",
+																	"type": "Text",
+																	"style": "pillTextExclude"
+																}
+															}
+														}
+													]
+												},
+												{
+													"type": "AlexaDivider",
+													"style": "rightDivider"
+												}
+											]
+										},
+										{
+											"type": "Container",
+											"style": "listGrid",
+											"items": [
+												{
+													"type": "Text",
+													"text": "Dietary Type",
+													"style": "captionText"
+												},
+												{
+													"type": "Container",
+													"direction": "row",
+													"numbered": true,
+													"wrap": "wrap",
+													"data": "${data.recipe.dietaryFilters}",
+													"items": [
+														{
+															"type": "Frame",
+															"paddingTop": "8dp",
+															"paddingRight": "8dp",
+															"item": {
+																"type": "Frame",
+																"style": "pill",
+																"item": {
+																	"type": "Text",
+																	"text": "${data}",
+																	"style": "pillText"
+																}
+															}
+														}
+													]
+												},
+												{
+													"type": "AlexaDivider",
+													"style": "rightDivider"
+												}
+											]
+										},
+										{
+											"type": "Container",
+											"style": "listGrid",
+											"items": [
+												{
+													"type": "Text",
+													"text": "Meal Type",
+													"style": "captionText"
+												},
+												{
+													"type": "Container",
+													"direction": "row",
+													"numbered": true,
+													"wrap": "wrap",
+													"data": "${data.recipe.mealType}",
+													"items": [
+														{
+															"type": "Frame",
+															"paddingTop": "8dp",
+															"paddingRight": "8dp",
+															"item": {
+																"type": "Frame",
+																"style": "pill",
+																"item": {
+																	"type": "Text",
+																	"text": "${data}",
+																	"style": "pillText"
+																}
+															}
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					},
+					{
+                        "when": "${data.showUnknownResponder == true}",
+                        "type": "Container",
+                        "position": "absolute",
+                        "width": "100%",
+                        "height": "100%",
+                        "top": "0",
+                        "left": "0",
+                        "items": [
+                            {
+                                "type": "AlexaBackground",
+                                "backgroundColor": "rgba(0,0,0,0.6)"
+                            },
+                            {
+                                "type": "Container",
+                                "width": "55%",
+                                "height": "100%",
+                                "alignSelf": "end",
+                                "items": [
+                                    {
+                                        "type": "AlexaBackground"
+                                    },
+                                    {
+                                        "type": "Text",
+                                        "text": "Sorry I don't understand. You can try the following commands at this step:",
+                                        "fontSize": "@fontSizeMedium",
+                                        "padding": "24dp"
+                                    },
+                                    {
+                                        "type": "AlexaDivider"
+                                    },
+                                    {
+                                        "type": "Container",
+                                        "width": "100%",
+                                        "direction": "row",
+                                        "numbered": true,
+                                        "wrap": "wrap",
+                                        "unknownResponderImportantIndex": 2,
+                                        "data": [
+                                            "\"<b>Edit</b>\" - Edit the request",
+                                            "\"<b>Confirm</b>\" - Confirm the request"
+                                        ],
+                                        "items": [
+                                            {
+                                                "type": "Frame",
+                                                "paddingTop": "12dp",
+                                                "paddingRight": "24dp",
+                                                "paddingLeft": "24dp",
+                                                "item": {
+                                                    "type": "Text",
+                                                    "text": "${data}",
+                                                    "fontSize": "@fontSizeMedium"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+				]
+			}
+		]
+	}
+}

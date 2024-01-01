@@ -1,0 +1,407 @@
+{
+    "type": "APL",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.6.0"
+        },
+        {
+            "name": "alexa-icon",
+            "version": "1.0.0"
+        }
+    ],
+    "resources": [],
+    "styles": {
+        "exitButtonContainer": {
+            "values": [
+                {
+                    "height": "18%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "height": "21%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "height": "17%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "height": "12%"
+                }
+            ]
+        },
+        "mainParagraphContainer": {
+            "values": [
+                {
+                    "padding": "24dp",
+                    "paddingTop": "0",
+                    "height": "64%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "height": "55%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "height": "70%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "height": "70%"
+                }
+            ]
+        },
+        "mainParagraphText": {
+            "values": [
+                {
+                    "fontSize": "@fontSizeMedium"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeLarge"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "fontSize": "@fontSizeXLarge"
+                }
+            ]
+        },
+        "currentStepTitle": {
+            "values": [
+                {
+                    "textAlign": "center",
+                    "fontSize": "@fontSizeMedium"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeXLarge"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "fontSize": "@fontSizeXLarge"
+                }
+            ]
+        },
+        "captionText": {
+            "values": [
+                {
+                    "textAlign": "left",
+                    "textAlignVertical": "center",
+                    "color": "white",
+                    "fontSize": "@fontSizeSmall"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeLarge"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "fontSize": "@fontSizeLarge"
+                }
+            ]
+        },
+        "pill": {
+            "values": [
+                {
+                    "backgroundColor": "rgba(255,255,255,0.1)",
+                    "paddingLeft": "12dp",
+                    "paddingRight": "12dp",
+                    "paddingBottom": "4dp",
+                    "paddingTop": "4dp",
+                    "borderRadius": "0"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "paddingLeft": "18dp",
+                    "paddingRight": "18dp",
+                    "paddingBottom": "8dp",
+                    "paddingTop": "8dp"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "paddingLeft": "18dp",
+                    "paddingRight": "18dp",
+                    "paddingBottom": "8dp",
+                    "paddingTop": "8dp"
+                }
+            ]
+        },
+        "pillText": {
+            "values": [
+                {
+                    "fontSize": "20dp",
+                    "textAlign": "left"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeMedium"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "fontSize": "@fontSizeLarge"
+                }
+            ]
+        },
+        "listGrid": {
+            "values": [
+                {
+                    "paddingTop": "16dp",
+                    "paddingRight": "16dp"
+                }
+            ]
+        }
+    },
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "data"
+        ],
+        "items": [
+            {
+                "when": "${@viewportProfile == @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "items": [
+                    {
+                        "type": "AlexaBackground"
+                    },
+                    {
+                        "type": "AlexaProgressBarRadial",
+                        "progressValue": "${data.currentProg}",
+                        "totalValue": "${data.totalProg}",
+                        "progressFillColor": "green",
+                        "position": "absolute"
+                    },
+                    {
+                        "type": "Text",
+                        "height": "100%",
+                        "textAlignVertical": "center",
+                        "textAlign": "center",
+                        "text": "${data.title} <br> <strong>${data.currentPage}</strong> | ${data.totalPages} <br>----------<br><b>Try<b><br><i>\"${data.echoDotHintText}\"</i>"
+                    }
+                ]
+            },
+            {
+                "when": "${@viewportProfile != @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "alignItems": "start",
+                "direction": "row",
+                "items": [
+                    {
+                        "type": "AlexaBackground"
+                    },
+                    {
+                        "type": "Container",
+                        "width": "60%",
+                        "height": "100%",
+                        "items": [
+                            {
+                                "type": "AlexaHeader",
+                                "headerBackButton": true,
+                                "headerBackgroundColor": "transparent",
+                                "headerTitle": "${data.title}",
+                                "headerSubtitle": "${data.returnButtonText}",
+                                "headerDivider": false
+                            },
+                            {
+                                "type": "ScrollView",
+                                "style": "mainParagraphContainer",
+                                "item": {
+                                    "type": "Text",
+                                    "style": "mainParagraphText",
+                                    "text": "(<strong>${data.currentPage}</strong> / ${data.totalPages}) - ${data.mainParagraph}"
+                                }
+                            },
+                            {
+                                "type": "Container",
+                                "paddingTop": "12dp",
+                                "paddingLeft": "16dp",
+                                "paddingBottom": "12dp",
+                                "direction": "row",
+                                "items": [
+                                    {
+                                        "type": "AlexaButton",
+                                        "buttonText": "${data.button1Text}",
+                                        "spacing": "@spacingSmall",
+                                        "primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": ["WIKIHOW_SHOW_STEPS_RESPONDER", "INTENT.PreviousStep"]
+
+											}
+										]
+                                    },
+                                    {
+                                        "type": "AlexaButton",
+                                        "buttonText": "${data.button2Text}",
+                                        "spacing": "@spacingSmall",
+                                        "primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": ["WIKIHOW_SHOW_STEPS_RESPONDER", "INTENT.NextStep"]
+
+											}
+										]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Container",
+                        "width": "40%",
+                        "height": "100%",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "minHeight": "100%",
+                                "backgroundColor": "rgba(0,0,0,0.25)",
+                                "padding": "24dp",
+                                "item": {
+                                    "type": "Container",
+                                    "width": "100%",
+                                    "items": [
+                                        {
+                                            "type": "Container",
+                                            "style": "exitButtonContainer",
+                                            "items": [
+                                                {
+                                                    "type": "AlexaButton",
+                                                    "buttonStyle": "egress",
+                                                    "buttonText": "Exit",
+                                                    "alignSelf": "end",
+                                                    "touchForward": true,
+                                                    "spacing": "@spacingSmall",
+                                                    "primaryAction": [
+                                                        {
+                                                            "type": "SendEvent",
+                                                            "arguments": "AMAZON.StopIntent"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "ScrollView",
+                                            "height": "80%",
+                                            "items": [
+                                                {
+                                                    "type": "Container",
+                                                    "items": [
+                                                        {
+                                                            "type": "Frame",
+                                                            "width": "100%",
+                                                            "item": {
+                                                                "type": "AlexaImage",
+                                                                "imageSource": "${data.imageSrc}",
+                                                                "imageAlignment": "center",
+                                                                "width": "100%",
+                                                                "alignSelf": "start",
+                                                                "imageBlurredBackground": true,
+                                                                "imageRoundedCorner": true,
+                                                                "imageScale": "best-fill",
+                                                                "imageAspectRatio": "standard_landscape"
+                                                            }
+                                                        },
+                                                        {
+                                                            "when": "${data.hasParts == true}",
+                                                            "type": "AlexaDivider",
+                                                            "paddingTop": "16dp",
+                                                            "paddingBottom": "12dp"
+                                                        },
+                                                        {
+                                                            "when": "${data.hasParts == true}",
+                                                            "data": "${data.partNames}",
+                                                            "type": "Container",
+                                                            "items": [
+                                                                {
+                                                                    "type": "Text",
+                                                                    "text": "${data}",
+                                                                    "style": "captionText"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "when": "${data.showUnknownResponder == true}",
+                        "type": "Container",
+                        "position": "absolute",
+                        "width": "100%",
+                        "height": "100%",
+                        "top": "0",
+                        "left": "0",
+                        "items": [
+                            {
+                                "type": "AlexaBackground",
+                                "backgroundColor": "rgba(0,0,0,0.6)"
+                            },
+                            {
+                                "type": "Container",
+                                "width": "55%",
+                                "height": "100%",
+                                "alignSelf": "end",
+                                "items": [
+                                    {
+                                        "type": "AlexaBackground"
+                                    },
+                                    {
+                                        "type": "Text",
+                                        "text": "Sorry I don't understand. You can try the following commands at this step:",
+                                        "fontSize": "@fontSizeMedium",
+                                        "padding": "24dp"
+                                    },
+                                    {
+                                        "type": "AlexaDivider"
+                                    },
+                                    {
+                                        "type": "Container",
+                                        "width": "100%",
+                                        "direction": "row",
+                                        "numbered": true,
+                                        "wrap": "wrap",
+                                        "unknownResponderImportantIdex": 3,
+                                        "data": [
+                                            "\"<b>Next</b>\" - Go to next step",
+                                            "\"<b>Previous</b>\" - Go to previous step",
+                                            "\"<b>Go to step X</b>\" - Jump to a step"
+                                        ],
+                                        "items": [
+                                            {
+                                                "type": "Frame",
+                                                "paddingTop": "12dp",
+                                                "paddingRight": "24dp",
+                                                "paddingLeft": "24dp",
+                                                "item": {
+                                                    "type": "Text",
+                                                    "text": "${data}",
+                                                    "fontSize": "@fontSizeMedium"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

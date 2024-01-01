@@ -1,0 +1,7 @@
+/models
+/data
+/wikihow_db_store
+/wheels
+__pycache__
+nohup.out
+/db

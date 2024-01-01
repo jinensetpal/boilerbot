@@ -1,0 +1,199 @@
+{
+    "type": "APL",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.6.0"
+        },
+        {
+            "name": "alexa-icon",
+            "version": "1.0.0"
+        }
+    ],
+    "resources": [],
+    "styles": {
+        "captionText": {
+            "values": [
+                {
+                    "textAlign": "left",
+                    "textAlignVertical": "center",
+                    "color": "white",
+                    "fontSize": "@fontSizeMedium"
+                }
+            ]
+        },
+        "pill": {
+            "values": [
+                {
+                    "backgroundColor": "rgba(255,255,255,0.1)",
+                    "paddingLeft": "12dp",
+                    "paddingRight": "12dp",
+                    "paddingBottom": "4dp",
+                    "paddingTop": "4dp",
+                    "borderRadius": "0"
+                }
+            ]
+        },
+        "pillText": {
+            "values": [
+                {
+                    "fontSize": "20dp",
+                    "textAlign": "left"
+                }
+            ]
+        },
+        "listGrid": {
+            "values": [
+                {
+                    "paddingTop": "12dp",
+                    "paddingRight": "16dp"
+                }
+            ]
+        }
+    },
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "data"
+        ],
+        "items": [
+            {
+                "when": "${@viewportProfile == @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "backgroundImageSource": "${data.imageSrc}",
+                        "colorOverlay": true
+                    },
+                    {
+                        "type": "Text",
+                        "height": "100%",
+                        "textAlignVertical": "center",
+                        "textAlign": "center",
+                        "text": "<strong>${data.mainText}</strong> <br><br> To quit,<br><i><b>try</b> \"Alexa, exit.\"</i>"
+                    }
+                ]
+            },
+            {
+                "when": "${@viewportProfile != @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "alignItems": "start",
+                "direction": "row",
+                "items": [
+                    {
+                        "type": "AlexaBackground"
+                    },
+                    {
+                        "type": "Container",
+                        "width": "60%",
+                        "height": "100%",
+                        "alignItems": "center",
+                        "justifyContent": "spaceBetween",
+                        "padding": "24dp",
+                        "items": [
+                            {
+                                "text": "${data.mainText}",
+                                "textAlign": "center",
+                                "fontWeight": "bold",
+                                "fontSize": "@fontSizeXLarge",
+                                "type": "Text",
+                                "height": "80%",
+                                "textAlignVertical": "center"
+                            },
+                            {
+                                "type": "AlexaFooter",
+                                "height": "20%",
+                                "alignSelf": "center",
+                                "width": "100%",
+                                "hintText": "To quit, try \"Alexa, exit.\""
+                            }
+                        ]
+                    },
+                    {
+                        "type": "ScrollView",
+                        "width": "40%",
+                        "height": "100%",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "minHeight": "100%",
+                                "backgroundColor": "rgba(0,0,0,0.25)",
+                                "padding": "24dp",
+                                "item": {
+                                    "type": "Container",
+                                    "width": "100%",
+                                    "height": "100%",
+                                    "justifyContent": "center",
+                                    "items": [
+                                        {
+                                            "type": "Text",
+                                            "text": "${data.title}",
+                                            "textAlign": "center",
+                                            "fontSize": "28dp",
+                                            "paddingBottom": "12dp"
+                                        },
+                                        {
+                                            "type": "Frame",
+                                            "width": "100%",
+                                            "item": {
+                                                "type": "AlexaImage",
+                                                "imageSource": "${data.imageSrc}",
+                                                "imageAlignment": "center",
+                                                "width": "100%",
+                                                "alignSelf": "start",
+                                                "imageBlurredBackground": true,
+                                                "imageRoundedCorner": true,
+                                                "imageScale": "best-fill",
+                                                "imageAspectRatio": "standard_landscape"
+                                            }
+                                        },
+                                        {
+                                            "type": "Container",
+                                            "style": "listGrid",
+                                            "items": [
+                                                {
+                                                    "type": "Container",
+                                                    "width": "100%",
+                                                    "direction": "row",
+                                                    "numbered": true,
+                                                    "wrap": "wrap",
+                                                    "data": "${data.recipeInfo}",
+                                                    "items": [
+                                                        {
+                                                            "type": "Frame",
+                                                            "paddingTop": "8dp",
+                                                            "paddingRight": "8dp",
+                                                            "item": {
+                                                                "type": "Frame",
+                                                                "style": "pill",
+                                                                "item": {
+                                                                    "type": "Text",
+                                                                    "text": "${data}",
+                                                                    "style": "pillText"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,336 @@
+{
+    "type": "APL",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.6.0"
+        },
+        {
+            "name": "alexa-icon",
+            "version": "1.0.0"
+        }
+    ],
+    "resources": [],
+    "styles": {
+        "MainContainer": {
+            "values": [
+                {
+                    "padding": "20dp",
+                    "height": "100%",
+                    "width": "100%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubRoundSmall}",
+                    "padding": "0"
+                }
+            ]
+        },
+        "CardContainer": {
+            "values": [
+                {
+                    "width": "40%",
+                    "height": "100%",
+                    "paddingRight": "20dp",
+                    "justifyContent": "end"
+                },
+                {
+                    "when": "${@viewportProfile == @hubRoundSmall}",
+                    "width": "100%",
+                    "paddingRight": "0"
+                }
+            ]
+        },
+        "TextContainer": {
+            "values": [
+                {
+                    "height": "100%",
+                    "width": "100%",
+                    "justifyContent": "start",
+                    "alignItems": "center"
+                },
+                {
+                    "when": "${@viewportProfile == @hubRoundSmall}",
+                    "justifyContent": "center"
+                }
+            ]
+        },
+        "itemTitle": {
+            "values": [
+                {
+                    "width": "100%",
+                    "textAlign": "center",
+                    "paddingTop": "12dp",
+                    "paddingBottom": "12dp",
+                    "paddingLeft": "6dp",
+                    "paddingRight": "6dp",
+                    "maxLines": 2,
+                    "fontSize": "@fontSizeMedium"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeLarge"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "fontSize": "@fontSizeSmall",
+                    "maxLines": 1
+                }
+            ]
+        },
+        "ratingNumberText": {
+            "values": [
+                {
+                    "width": "100%",
+                    "textAlign": "center",
+                    "height": "100%",
+                    "fontSize": "@fontSizeXSmall"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeMedium"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "fontSize": "@fontSizeXSmall"
+                }
+            ]
+        },
+        "centerHint": {
+            "values": [
+                {
+                    "width": "80%",
+                    "height": "100%",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "fontWeight": "bold",
+                    "fontSize": "@fontSizeXLarge"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "fontSize": "@fontSizeMedium"
+                }
+            ]
+        }
+    },
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "data"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "height": "100%",
+                "width": "100%",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "colorOverlay": true,
+                        "backgroundImageSource": "${data.backgroundImage}"
+                    },
+                    {
+                        "type": "Sequence",
+                        "scrollDirection": "horizontal",
+                        "style": "MainContainer",
+                        "data": "${data.results}",
+                        "items": [
+                            {
+                                "type": "Container",
+                                "style": "CardContainer",
+                                "items": [
+                                    {
+                                        "when": "${@viewportProfile == @hubRoundSmall && data.results_len != 0}",
+                                        "type": "AlexaBackground",
+                                        "height": "100%",
+                                        "width": "100%",
+                                        "colorOverlay": true,
+                                        "backgroundImageSource": "${data.image}"
+                                    },
+                                    {
+                                        "type": "TouchWrapper",
+                                        "height": "80%",
+                                        "item": {
+                                            "type": "Container",
+                                            "style": "TextContainer",
+                                            "items": [
+                                                {
+                                                    "when": "${@viewportProfile != @hubRoundSmall && data.results_len != 0}",
+                                                    "type": "Image",
+                                                    "source": "${data.image}",
+                                                    "borderRadius": "15dp",
+                                                    "height": "55%",
+                                                    "width": "100%",
+                                                    "scale": "best-fill"
+                                                },
+                                                {
+                                                    "type": "Text",
+                                                    "text": "${data.title}",
+                                                    "style": "itemTitle"
+                                                },
+                                                {
+                                                    "when": "${data.ratingNumber != 0}",
+                                                    "type": "AlexaRating",
+                                                    "ratingSlotPadding": "4dp",
+                                                    "ratingSlotMode": "multiple",
+                                                    "ratingNumber": "${data.ratingNumber}",
+                                                    "paddingBottom": "12dp",
+                                                    "paddingLeft": "16dp"
+                                                },
+                                                {
+                                                    "type": "Text",
+                                                    "style": "ratingNumberText",
+                                                    "text": "${data.ratingText}"
+                                                },
+                                                {
+                                                    "when": "${@viewportProfile == @hubRoundSmall && data.results_len != 0}",
+                                                    "type": "Text",
+                                                    "width": "70%",
+                                                    "fontSize": "24dp",
+                                                    "text": "Swipe for More Options",
+                                                    "textAlign": "center",
+                                                    "paddingBottom": "0"
+                                                }
+                                            ]
+                                        },
+                                        "onPress": [
+											{
+												"type": "SendEvent",
+												"arguments": [
+													"ListItemSelected",
+                                                    "${data.idx}"
+												]
+											}
+										]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "when": "${@viewportProfile != @hubRoundSmall && data.results_len != 0}",
+                        "type": "Container",
+                        "width": "100%",
+                        "position": "absolute",
+                        "direction": "row",
+                        "justifyContent": "spaceBetween",
+                        "padding": "12dp",
+                        "top": "0",
+                        "height": "20%",
+                        "items": [
+                            {
+                                "type": "AlexaButton",
+                                "buttonStyle": "ingress",
+                                "touchForward": false,
+                                "buttonIconSource": "ic_search",
+                                "buttonText": "Start a New Search",
+                                "primaryAction": [
+                                    {
+                                        "type": "SendEvent",
+                                        "arguments": ["INTENT.Restart"]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "AlexaButton",
+                                "buttonStyle": "contained",
+                                "touchForward": true,
+                                "buttonText": "Exit",
+                                "primaryAction": [
+                                    {
+                                        "type": "SendEvent",
+                                        "arguments": ["AMAZON.StopIntent"]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "when": "${data.showUnknownResponder == true}",
+                        "type": "Container",
+                        "position": "absolute",
+                        "width": "100%",
+                        "height": "100%",
+                        "top": "0",
+                        "left": "0",
+                        "items": [
+                            {
+                                "type": "AlexaBackground",
+                                "backgroundColor": "rgba(0,0,0,0.6)"
+                            },
+                            {
+                                "type": "Container",
+                                "width": "55%",
+                                "height": "100%",
+                                "alignSelf": "end",
+                                "items": [
+                                    {
+                                        "type": "AlexaBackground"
+                                    },
+                                    {
+                                        "type": "Text",
+                                        "text": "Sorry I don't understand. You can try the following commands at this step:",
+                                        "fontSize": "@fontSizeMedium",
+                                        "padding": "24dp"
+                                    },
+                                    {
+                                        "type": "AlexaDivider"
+                                    },
+                                    {
+                                        "type": "Container",
+                                        "width": "100%",
+                                        "direction": "row",
+                                        "numbered": true,
+                                        "wrap": "wrap",
+                                        "unknownResponderImportantIdex": 2,
+                                        "data": [
+                                            "\"<b>Go Back</b>\" - Go back to the search result page",
+                                            "\"<b>Option N</b>\" - Select an option"
+                                        ],
+                                        "items": [
+                                            {
+                                                "type": "Frame",
+                                                "paddingTop": "12dp",
+                                                "paddingRight": "24dp",
+                                                "paddingLeft": "24dp",
+                                                "item": {
+                                                    "type": "Text",
+                                                    "text": "${data}",
+                                                    "fontSize": "@fontSizeMedium"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "when": "${data.results_len == 0}",
+                        "type": "Container",
+                        "height": "100%",
+                        "width": "100%",
+                        "alignItems": "center",
+                        "position": "absolute",
+                        "items": [
+                            {
+                                "type": "AlexaBackground",
+                                "colorOverlay": true,
+                                "backgroundImageSource": "${data.backgroundImage}"
+                            },
+                            {
+                                "type": "Text",
+                                "style": "centerHint",
+                                "text": "Sorry, we couldn't find any relevant results. <br>Please try a different question : )"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

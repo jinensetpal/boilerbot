@@ -1,0 +1,385 @@
+{
+	"type": "APL",
+	"settings": {},
+	"theme": "dark",
+	"import": [
+		{
+			"name": "alexa-layouts",
+			"version": "1.6.0"
+		},
+		{
+			"name": "alexa-icon",
+			"version": "1.0.0"
+		}
+	],
+	"resources": [],
+	"styles": {
+		"mainParagraphContainer": {
+			"values": [
+				{
+					"padding": "24dp",
+					"paddingTop": "0",
+					"height": "64%"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeSmall}",
+					"height": "55%"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"height": "70%"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"height": "70%"
+				}
+			]
+		},
+		"mainParagraphText": {
+			"values": [
+				{
+					"fontSize": "@fontSizeMedium"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeLarge"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeXLarge"
+				}
+			]
+		},
+		"currentStepTitle": {
+			"values": [
+				{
+					"textAlign": "center",
+					"fontSize": "@fontSizeMedium"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeXLarge"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeXLarge"
+				}
+			]
+		},
+		"captionText": {
+			"values": [
+				{
+					"textAlign": "left",
+					"textAlignVertical": "center",
+					"color": "white",
+					"fontSize": "@fontSizeMedium"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeXLarge"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeXLarge"
+				}
+			]
+		},
+		"pill": {
+			"values": [
+				{
+					"backgroundColor": "rgba(255,255,255,0.1)",
+					"paddingLeft": "12dp",
+					"paddingRight": "12dp",
+					"paddingBottom": "4dp",
+					"paddingTop": "4dp",
+					"borderRadius": "0"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"paddingLeft": "18dp",
+					"paddingRight": "18dp",
+					"paddingBottom": "8dp",
+					"paddingTop": "8dp"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"paddingLeft": "18dp",
+					"paddingRight": "18dp",
+					"paddingBottom": "8dp",
+					"paddingTop": "8dp"
+				}
+			]
+		},
+		"pillText": {
+			"values": [
+				{
+					"fontSize": "20dp",
+					"textAlign": "left"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeLarge}",
+					"fontSize": "@fontSizeMedium"
+				},
+				{
+					"when": "${@viewportProfile == @hubLandscapeXLarge}",
+					"fontSize": "@fontSizeLarge"
+				}
+			]
+		},
+		"listGrid": {
+			"values": [
+				{
+					"paddingTop": "16dp",
+					"paddingRight": "16dp"
+				}
+			]
+		}
+	},
+	"onMount": [],
+	"graphics": {},
+	"commands": {},
+	"layouts": {},
+	"mainTemplate": {
+		"parameters": [
+			"data"
+		],
+		"items": [
+			{
+				"when": "${@viewportProfile == @hubRoundSmall}",
+				"type": "Container",
+				"width": "100%",
+				"height": "100%",
+				"items": [
+					{
+						"type": "AlexaBackground"
+					},
+					{
+						"type": "AlexaProgressBarRadial",
+						"progressValue": "${data.currentProg}",
+						"totalValue": "${data.totalProg}",
+						"progressFillColor": "green",
+						"position": "absolute"
+					},
+					{
+						"type": "Text",
+						"height": "100%",
+						"textAlignVertical": "center",
+						"textAlign": "center",
+						"text": "${data.title} <br> <strong>${data.currentPage}</strong> | ${data.totalPages} <br>----------<br><b>Try<b><br><i>\"${data.echoDotHintText}\"</i>"
+					}
+				]
+			},
+			{
+				"type": "Container",
+				"width": "100%",
+				"height": "100%",
+				"alignItems": "start",
+				"direction": "row",
+				"items": [
+					{
+						"type": "AlexaBackground"
+					},
+					{
+						"type": "Container",
+						"width": "60%",
+						"height": "100%",
+						"items": [
+							{
+								"type": "AlexaHeader",
+								"headerBackButton": true,
+								"headerBackgroundColor": "transparent",
+								"headerTitle": "${data.title}",
+								"headerSubtitle": "Leave the recipe",
+								"headerDivider": false
+							},
+							{
+								"type": "Container",
+								"paddingLeft": "16dp",
+								"paddingBottom": "16dp",
+								"direction": "row",
+								"items": [
+									{
+										"type": "AlexaButton",
+										"buttonText": "${data.button1Text}",
+										"spacing": "@spacingSmall",
+										"primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": ["RECIPE_SHOW_STEPS_RESPONDER", "INTENT.PreviousStep"]
+											}
+										]
+									},
+									{
+										"type": "AlexaButton",
+										"buttonText": "${data.button2Text}",
+										"spacing": "@spacingSmall",
+										"primaryAction": [
+											{
+												"type": "SendEvent",
+												"arguments": ["RECIPE_SHOW_STEPS_RESPONDER", "INTENT.NextStep"]
+											}
+										]
+									}
+								]
+							},
+							{
+								"type": "ScrollView",
+								"style": "mainParagraphContainer",
+								"item": {
+									"type": "Text",
+									"style": "mainParagraphText",
+									"text": "${data.mainParagraph}"
+								}
+							}
+						]
+					},
+					{
+						"type": "ScrollView",
+						"width": "40%",
+						"height": "100%",
+						"items": [
+							{
+								"type": "Frame",
+								"minHeight": "100%",
+								"backgroundColor": "rgba(0,0,0,0.25)",
+								"padding": "24dp",
+								"item": {
+									"type": "Container",
+									"width": "100%",
+									"justifyContent": "center",
+									"items": [
+										{
+											"type": "Text",
+											"text": "Current Step",
+											"style": "currentStepTitle"
+										},
+										{
+											"currentPage": "${data.currentPage}",
+											"totalPages": "${data.totalPages}",
+											"type": "AlexaPageCounter",
+											"width": "100%",
+											"paddingBottom": "12dp"
+										},
+										{
+											"type": "Frame",
+											"width": "100%",
+											"item": {
+												"type": "AlexaImage",
+												"imageSource": "${data.imageSrc}",
+												"imageAlignment": "center",
+												"width": "100%",
+												"alignSelf": "start",
+												"imageBlurredBackground": true,
+												"imageRoundedCorner": true,
+												"imageScale": "best-fill",
+												"imageAspectRatio": "standard_landscape"
+											}
+										},
+										{
+											"type": "Container",
+											"style": "listGrid",
+											"items": [
+												{
+													"type": "Text",
+													"text": "You will need:",
+													"style": "captionText"
+												},
+												{
+													"type": "Container",
+													"width": "100%",
+													"direction": "row",
+													"numbered": true,
+													"wrap": "wrap",
+													"data": "${data.ingredients}",
+													"items": [
+														{
+															"type": "Frame",
+															"paddingTop": "8dp",
+															"paddingRight": "8dp",
+															"item": {
+																"type": "Frame",
+																"style": "pill",
+																"item": {
+																	"type": "Text",
+																	"text": "${data}",
+																	"style": "pillText"
+																}
+															}
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					},
+					{
+							"when": "${data.showUnknownResponder == true}",
+							"type": "Container",
+							"position": "absolute",
+							"width": "100%",
+							"height": "100%",
+							"top": "0",
+							"left": "0",
+							"items": [
+								{
+									"type": "AlexaBackground",
+									"backgroundColor": "rgba(0,0,0,0.6)"
+							},
+							{
+								"type": "Container",
+								"width": "55%",
+								"height": "100%",
+								"alignSelf": "end",
+								"items": [
+									{
+										"type": "AlexaBackground"
+									},
+									{
+										"type": "Text",
+										"text": "Sorry, I don't understand. Please try one of the following commands:",
+										"fontSize": "@fontSizeMedium",
+										"padding": "24dp"
+									},
+									{
+										"type": "AlexaDivider"
+									},
+									{
+                                        "type": "Container",
+                                        "width": "100%",
+                                        "direction": "row",
+                                        "numbered": true,
+                                        "wrap": "wrap",
+                                        "unknownResponderImportantIndex": 5,
+                                        "data": [
+                                            "\"<b>Next</b>\" - Go to next step",
+											"\"<b>Previous</b>\" - Go to previous step",
+											"\"<b>Step X</b>\" - Jump to a specific step",
+											"\"<b>Overview</b>\" - Go back to preview page",
+											"\"<b>Complete</b>\" - Complete the task and start a new search"
+                                        ],
+                                        "items": [
+                                            {
+                                                "type": "Frame",
+                                                "paddingTop": "12dp",
+                                                "paddingRight": "24dp",
+                                                "paddingLeft": "24dp",
+                                                "item": {
+                                                    "type": "Text",
+                                                    "text": "${data}",
+                                                    "fontSize": "@fontSizeMedium"
+                                                }
+                                            }
+                                        ]
+                                    }
+								]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

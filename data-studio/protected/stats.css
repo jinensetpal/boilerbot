@@ -1,0 +1,52 @@
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #007aff; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0169d9; 
+}
+
+.daily-rating-selection{
+    height: 300px;
+    max-height: 300px;
+    padding-right: 5px;
+    overflow-y: auto;
+}
+
+.one-day-avg-container{
+    height: 300px;
+    width: 100%;
+    background-color: rgb(229 229 229);
+    padding: 20px;
+}
+
+.big-number{
+    height: 200px;
+    width: 100%;
+    line-height: 200px;
+    font-size: 5rem;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    letter-spacing: .1rem;
+}
+
+.daily-metadata{
+    text-align: center;
+    line-height: 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}

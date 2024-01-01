@@ -1,0 +1,79 @@
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #007aff; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0169d9; 
+}
+
+.api-panel{
+    width: 60%;
+    min-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.api-results{
+    background-color: #e3e3e3;
+    border-radius: 15px;
+    padding: 20px;
+    display: none;
+}
+
+.search-panel-title{
+    text-align: center;
+    width: 100%;
+}
+
+.loading-icon{
+    text-align: center;
+    font-size: 400%;
+}
+
+button.block-button{
+    display: block;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-size: 1.5rem;
+}
+
+.wiki-part-steps{
+    max-height: 300px;
+    overflow-y: hidden;
+    padding-right: 10px;
+}
+
+.wiki-part-steps:hover{
+    overflow-y: auto;
+}
+
+/* Handle */
+.wiki-part-steps::-webkit-scrollbar-thumb {
+    background: #ff4040; 
+}
+
+/* Handle on hover */
+.wiki-part-steps::-webkit-scrollbar-thumb:hover {
+    background: #ff1313; 
+}
+
+#llm-response{
+    background-color: #e3e3e3;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 50px;
+}

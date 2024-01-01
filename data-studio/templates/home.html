@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boiler Bot Data</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{url_for('protected', filename='index.css')}}">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Boiler Bot Data Studio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Chats</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/stats">Statistics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/api">API</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/llm">LLM</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/dataset">Dataset</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/annotation">Annotation</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            {% block content %}
+            <a class="nav-link" aria-current="page" href="/logout">Hello dave! <small>Logout</small></a>
+            {% endblock %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container pt-3">
+    <div class="row">
+      <div class="col-lg-4">
+        
+        <button class="btn btn-outline-primary btm-sm mb-3" id="show-filter-button" data-bs-toggle="offcanvas" data-bs-target="#filter-panel"><i class="fa-solid fa-gear"></i> Filters</button>
+        <div class="conv-pagination" id="conv-pagination"></div>
+        <div id="conv-list-container">
+          <table class="table" id="conv-list">
+
+          </table>
+        </div>
+      </div>
+
+      <div class="col-lg-8" style="max-height: calc(100vh - 80px); overflow-y: auto;">
+        <div class="conv-metadata">
+          <div class="meta-data-field">Conversation ID: <span id="conv-metadata-id"></span></div>
+          <div class="meta-data-field">Total Turns: <span id="conv-metadata-turns"></span></div>
+          <div class="meta-data-field">Rating: <span id="conv-metadata-rating"></span></div>
+          <div class="meta-data-field">Feedback: <span id="conv-metadata-feedback"></span></div>
+          <div class="meta-data-field">Start Time: <span id="conv-metadata-time"></span></div>
+          <div class="meta-data-field mt-2"><button id="viewDebugInfo" class="btn btn-sm btn-outline-secondary">Debug Info</button></div>
+          <!-- <hr>
+          <div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                ASR issue
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+              <label class="form-check-label" for="flexCheckChecked">
+                Search result issue
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+              <label class="form-check-label" for="flexCheckChecked">
+                Parsing issue
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+              <label class="form-check-label" for="flexCheckChecked">
+                Intent issue
+              </label>
+            </div>
+          </div> -->
+        </div>
+        <div class="conv-lins">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="filter-panel" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filter Options</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      
+      <div class="row mb-3">
+        <div class="col">
+          <label for="min-rating-filter" class="form-label">Min Rating</label>
+          <select class="form-select" id="min-rating-filter">
+            <option value="0">0</option>
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="col">
+          
+          <label for="max-rating-filter" class="form-label">Max Rating</label>
+          <select class="form-select" id="max-rating-filter">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+          </select>
+        </div>
+        <div class="form-text">
+          0 means no rating. Set both to 0 to show all non-rated conversations.
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col">
+          <label for="start-date-filter" class="form-label">Start Date</label>
+          <input type="date" class="form-control" id="start-date-filter">
+        </div>
+
+        <div class="col">
+          <label for="end-date-filter" class="form-label">End Date</label>
+          <input type="date" class="form-control" id="end-date-filter">
+        </div>
+      </div>
+
+      <hr>
+      
+      
+      <button class="btn btn-success" onclick="getConvWithFilter()" data-bs-dismiss="offcanvas">Apply Filters</button>
+      <button class="btn btn-warning" onclick="resetConvFilter()" data-bs-dismiss="offcanvas">Clear Filters</button>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" id="add-instruction-model" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="article-title">Add Instruction</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="text" class="form-control" id="new-line-id" hidden>
+            <input type="text" class="form-control" id="new-conv-id" hidden>
+
+            <div class="mb-3">
+                <label for="new-context" class="form-label">Context</label>
+                <textarea class="form-control" id="new-context" placeholder="optional"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="new-input" class="form-label">User Input</label>
+                <input type="text" class="form-control" id="new-input" disabled readonly>
+            </div>
+            <div class="mb-3">
+              <label for="new-function" class="form-label">Reponse Function</label>
+              <select class="form-select" id="new-function"></select>
+            </div>
+
+            <div class="mb-3">
+                <label for="new-response" class="form-label">Response Parameter</label>
+                <textarea class="form-control" id="new-response" placeholder="Required"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="new-comment" class="form-label">Comments (Internal)</label>
+                <textarea class="form-control" id="new-comment" placeholder="optional"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="new-annotator" class="form-label">Annotator</label>
+                {% block annotator %}
+                <input type="text" class="form-control" id="new-annotator" value="dave" disabled readonly>
+                {% endblock %}
+            </div>
+            <div class="mb-3">
+                <label for="new-category" class="form-label">Category</label>
+                <input type="text" class="form-control" id="new-category" value="Instruction Following" disabled readonly>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" onclick="addInstruction()">Add Instruction</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="debug-info-model" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="article-title">Debug Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <h5>Conversation</h5>
+          <div id="debug-conv-id"></div>
+        </div>
+        <div>
+          <h5>Lines</h5>
+          <div id="debug-line-container"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" style="position: absolute; bottom: 20px; display: flex; justify-content: center; width: 100%;">
+    <div id="success-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto text-success">Instruction Added Successfully!</strong>
+          <small class="text-muted">Just Now</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        {% block success %}
+        <div class="toast-body">
+          Thank you, <strong>dave</strong> <br>The world is a better place because of you!
+        </div>
+        {% endblock %}
+    </div>
+</div>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+    integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{url_for('protected', filename='utils.js')}}"></script>
+    <script src="{{url_for('protected', filename='annotation_utils.js')}}"></script>
+  <script src="{{url_for('protected', filename='index.js')}}"></script>
+</body>
+
+</html>

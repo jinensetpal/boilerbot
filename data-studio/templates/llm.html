@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Boiler Bot Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{url_for('protected', filename='llm.css')}}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Boiler Bot Data Studio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Chats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/stats">Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/api">API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/llm">LLM</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/dataset">Dataset</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/annotation">Annotation</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        {% block content %}
+                        <a class="nav-link" aria-current="page" href="/logout">Hello dave!
+                            <small>Logout</small></a>
+                        {% endblock %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="list-group list-group-flush" id="api-list">
+                    <button type="button"
+                        class="list-group-item list-group-item-action active">Sequential Pipeline</button>
+                    <button type="button" class="list-group-item list-group-item-action"
+                        disabled>Parallel Pipeline</button>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="api-panel wikihow-ours-panel active-panel">
+                    <div>
+                        <div class="search-panel-title mb-3">Welcome to BoilerBot</div>
+                        <div class="mb-3" hidden>
+                            <label for="system_msg" class="form-label">System Prompt</label>
+                            <textarea class="form-control" id="system_msg" rows="3" disabled></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prompt" class="form-label">User Input</label>
+                            <textarea class="form-control" id="prompt" rows="8"></textarea>
+                        </div>
+                        <div class="mb-3" hidden>
+                            <label for="max_len" class="form-label">Max Output Length: <span id="max_len_indicator">80</span> tokens</label>
+                            <input type="range" class="form-range" id="max_len" min="20" max="400" step="20" value="80">
+                        </div>
+                        <button id="llm-submit-btn" class="btn btn-outline-primary mb-3" onclick="submitPrompt()">Submit</button>
+
+                        <div class="llm-response-container">
+                            <label class="form-label">Response</label>
+                            <div id="llm-response">
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-results">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+        integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{url_for('protected', filename='utils.js')}}"></script>
+    <script src="{{url_for('protected', filename='llm.js')}}"></script>
+</body>
+
+</html>
