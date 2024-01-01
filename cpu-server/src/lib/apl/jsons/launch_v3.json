@@ -1,0 +1,279 @@
+{
+    "type": "APL",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.6.0"
+        },
+        {
+            "name": "alexa-icon",
+            "version": "1.0.0"
+        }
+    ],
+    "resources": [],
+    "styles": {
+        "titleText": {
+            "values": [
+                {
+                    "width": "100%",
+                    "height": "100%",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "fontSize": "@fontSizeXLarge",
+                    "fontWeight": "bold"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSize2XLarge"
+                }
+            ]
+        },
+        "subTitle": {
+            "values": [
+                {
+                    "fontSize": "@fontSizeLarge",
+                    "fontFamily": "Bookerly",
+                    "width": "100%",
+                    "textAlign": "center"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "fontSize": "@fontSizeMedium"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeXLarge"
+                }
+            ]
+        },
+        "contentText": {
+            "values": [
+                {
+                    "fontSize": "@fontSizeMedium",
+                    "fontFamily": "Bookerly",
+                    "lineHeight": 1.5
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeLarge",
+                    "lineHeight": 1.7
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeSmall}",
+                    "fontSize": "@fontSizeSmall",
+                    "lineHeight": 1.3
+                }
+            ]
+        }
+    },
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "data"
+        ],
+        "items": [
+            {
+                "when": "${@viewportProfile == @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "colorOverlay": true,
+                        "backgroundImageSource": "${data.backgroundImage}"
+                    },
+                    {
+                        "type": "Text",
+                        "height": "100%",
+                        "textAlignVertical": "center",
+                        "textAlign": "center",
+                        "fontFamily": "Amazon Ember Display",
+                        "fontSize": "@fontSizeXLarge",
+                        "text": "<b>Try</b><br><i>\"Alexa, how to make Oreo Cookies.\"</i>"
+                    }
+                ]
+            },
+            {
+                "when": "${@viewportProfile != @hubRoundSmall}",
+                "type": "Container",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "backgroundImageSource": "${data.backgroundImage}"
+                    },
+                    {
+                        "type": "Container",
+                        "height": "20%",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "width": "100%",
+                                "height": "100%",
+                                "item": {
+                                    "type": "Text",
+                                    "text": "Ask me about cooking or DIY",
+                                    "style": "titleText"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Container",
+                        "height": "80%",
+                        "direction": "row",
+                        "items": [
+                            {
+                                "type": "Container",
+                                "paddingLeft": "32dp",
+                                "paddingRight": "16dp",
+                                "width": "50%",
+                                "items": [
+                                    {
+                                        "type": "Frame",
+                                        "height": "100%",
+                                        "item": {
+                                            "type": "Container",
+                                            "height": "95%",
+                                            "width": "100%",
+                                            "justifyContent": "spaceAround",
+                                            "direction": "column",
+                                            "items": [
+                                                {
+                                                    "type": "Frame",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "text": "😀 I'm good at:",
+                                                        "style": "subTitle"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Frame",
+                                                    "width": "100%",
+                                                    "paddingLeft": "16dp",
+                                                    "paddingTop": "8dp",
+                                                    "paddingBottom": "8dp",
+                                                    "paddingRight": "16dp",
+                                                    "backgroundColor": "rgba(0, 198, 22, 0.5)",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "style": "contentText",
+                                                        "text": "<strong>Cooking:</strong><br>\"Recipe for Caesar Salad\""
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Frame",
+                                                    "width": "100%",
+                                                    "paddingLeft": "16dp",
+                                                    "paddingTop": "8dp",
+                                                    "paddingBottom": "8dp",
+                                                    "paddingRight": "16dp",
+                                                    "backgroundColor": "rgba(0, 198, 22, 0.5)",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "style": "contentText",
+                                                        "text": "<strong>Simple DIY:</strong><br>\"How to build a lego car\""
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Frame",
+                                                    "width": "100%",
+                                                    "paddingLeft": "16dp",
+                                                    "paddingTop": "8dp",
+                                                    "paddingBottom": "8dp",
+                                                    "paddingRight": "16dp",
+                                                    "backgroundColor": "rgba(0, 198, 22, 0.5)",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "style": "contentText",
+                                                        "text": "<strong>Bigger DIY:</strong><br>\"How to build a fence\""
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "Container",
+                                "paddingLeft": "16dp",
+                                "paddingRight": "32dp",
+                                "width": "50%",
+                                "items": [
+                                    {
+                                        "type": "Frame",
+                                        "height": "100%",
+                                        "item": {
+                                            "type": "Container",
+                                            "height": "95%",
+                                            "width": "100%",
+                                            "justifyContent": "spaceAround",
+                                            "direction": "column",
+                                            "items": [
+                                                {
+                                                    "type": "Frame",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "text": "😕 I'm bad at:",
+                                                        "style": "subTitle"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Frame",
+                                                    "width": "100%",
+                                                    "paddingLeft": "16dp",
+                                                    "paddingTop": "8dp",
+                                                    "paddingBottom": "8dp",
+                                                    "paddingRight": "16dp",
+                                                    "backgroundColor": "rgba(195, 2, 2, 0.5)",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "style": "contentText",
+                                                        "text": "<strong>Vague Questions:</strong><br>\"Give me a recipe\""
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Frame",
+                                                    "width": "100%",
+                                                    "paddingLeft": "16dp",
+                                                    "paddingTop": "8dp",
+                                                    "paddingBottom": "8dp",
+                                                    "paddingRight": "16dp",
+                                                    "backgroundColor": "rgba(195, 2, 2, 0.5)",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "style": "contentText",
+                                                        "text": "<strong>Chit Chat:</strong><br>\"How are you\""
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Frame",
+                                                    "width": "100%",
+                                                    "paddingLeft": "16dp",
+                                                    "paddingTop": "8dp",
+                                                    "paddingBottom": "8dp",
+                                                    "paddingRight": "16dp",
+                                                    "backgroundColor": "rgba(195, 2, 2, 0.5)",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "style": "contentText",
+                                                        "text": "<strong>Out of scope command:</strong><br>\"Play music / set timer\""
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

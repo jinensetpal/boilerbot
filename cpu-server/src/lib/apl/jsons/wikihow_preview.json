@@ -1,0 +1,382 @@
+{
+    "type": "APL",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.6.0"
+        }
+    ],
+    "resources": [],
+    "styles": {
+        "stepText": {
+            "values": [
+                {
+                    "fontSize": "@fontSizeXSmall",
+                    "fontWeight": "100",
+                    "paddingLeft": "12dp",
+                    "width": "100%",
+                    "shrink": 1
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeMedium",
+                    "paddingLeft": "18dp"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "fontSize": "@fontSizeXLarge",
+                    "paddingLeft": "24dp"
+                }
+            ]
+        },
+        "ingredientText": {
+            "values": [
+                {
+                    "fontSize": "@fontSizeXSmall",
+                    "paddingLeft": "12dp",
+                    "fontWeight": "100",
+                    "paddingBottom": "12dp",
+                    "width": "100%",
+                    "shrink": 1
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "fontSize": "@fontSizeMedium",
+                    "paddingLeft": "18dp",
+                    "paddingTop": "6dp",
+                    "paddingRight": "18dp"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "fontSize": "@fontSizeXLarge",
+                    "paddingLeft": "24dp",
+                    "paddingTop": "12dp",
+                    "paddingRight": "24dp"
+                }
+            ]
+        },
+        "stepContainer": {
+            "values": [
+                {
+                    "paddingTop": "0",
+                    "paddingLeft": "12dp",
+                    "paddingRight": "24dp",
+                    "height": "80%",
+                    "width": "100%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeLarge}",
+                    "paddingLeft": "18dp",
+                    "height": "85%"
+                },
+                {
+                    "when": "${@viewportProfile == @hubLandscapeXLarge}",
+                    "paddingLeft": "24dp",
+                    "height": "85%"
+                }
+            ]
+        }
+    },
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+        "data"
+        ],
+        "items": [
+            {
+                "when": "${@viewportProfile == @hubRoundSmall}",
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "items": [
+                    {
+                        "type": "AlexaBackground"
+                    },
+                    {
+                        "type": "Container",
+                        "height": "100%",
+                        "width": "100%",
+                        "items": [
+                            {
+                                "type": "Container",
+                                "height": "25%",
+                                "justifyContent": "end",
+                                "items": [
+                                    {
+                                        "type": "Text",
+                                        "text": "${data.title}",
+                                        "textAlign": "center",
+                                        "textAlignVertical": "bottom"
+                                    }
+                                ]
+                            },
+                            {
+                                "height": "50%",
+                                "width": "80%",
+                                "alignSelf": "center",
+                                "paddingTop": "10dp",
+                                "type": "ScrollView",
+                                "item": {
+                                    "type": "Container",
+                                    "data": "${data.steps}",
+                                    "items": [
+                                        {
+                                            "type": "Text",
+                                            "textAlign": "left",
+                                            "style": "ingredientText",
+                                            "text": "${data}"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "Container",
+                                "height": "25%",
+                                "width": "100%",
+                                "direction": "row",
+                                "paddingTop": "12dp",
+                                "justifyContent": "center",
+                                "alignItems": "center",
+                                "items": [
+                                    {
+                                        "type": "AlexaBackground",
+                                        "backgroundColor": "rgba(0,0,0,0.4)"
+                                    },
+                                    {
+                                        "type": "AlexaButton",
+                                        "buttonText": "View by Step",
+                                        "buttonStyle": "egress",
+                                        "primaryAction": [
+                                            {
+                                                "type": "SendEvent",
+                                                "arguments": "AMAZON.StepsIntent"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "when": "${@viewportProfile != @hubRoundSmall}",
+                "type": "Container",
+                "items": [
+                    {
+                        "type": "AlexaBackground"
+                    },
+                    {
+                        "type": "Container",
+                        "height": "100%",
+                        "direction": "row",
+                        "items": [
+                            {
+                                "type": "Container",
+                                "width": "60%",
+                                "items": [
+                                    {
+                                        "type": "AlexaHeader",
+                                        "headerBackButton": true,
+                                        "headerBackgroundColor": "transparent",
+                                        "headerTitle": "${data.title} (WikiHow)",
+                                        "headerSubtitle": "Go back to Results",
+                                        "height": "20%"
+                                    },
+                                    {
+                                        "type": "Sequence",
+                                        "style": "stepContainer",
+                                        "numbered": true,
+                                        "data": "${data.steps}",
+                                        "item": {
+                                            "type": "Container",
+                                            "direction": "row",
+                                            "paddingLeft": "12dp",
+                                            "paddingBottom": "24dp",
+                                            "items": [
+                                                {
+                                                    "type": "AlexaOrdinal"
+                                                },
+                                                {
+                                                    "type": "Container",
+                                                    "width": "100%",
+                                                    "paddingRight": "50dp",
+                                                    "item": {
+                                                        "type": "Text",
+                                                        "style": "stepText",
+                                                        "text": "${data}"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "Container",
+                                "width": "40%",
+                                "items": [
+                                    {
+                                        "type": "Frame",
+                                        "height": "100%",
+                                        "backgroundColor": "rgba(0,0,0,0.25)",
+                                        "padding": "24dp",
+                                        "paddingBottom": "0",
+                                        "item": {
+                                            "type": "Container",
+                                            "height": "100%",
+                                            "width": "100%",
+                                            "items": [
+                                                {
+                                                    "type": "ScrollView",
+                                                    "height": "100%",
+                                                    "paddingBottom": "25%",
+                                                    "item": {
+                                                        "type": "Container",
+                                                        "data": "${data.methodsImages}",
+                                                        "items": [
+                                                            {
+                                                                "type": "Image",
+                                                                "width": "90%",
+                                                                "alignSelf": "center",
+                                                                "height": "150dp",
+                                                                "scale": "best-fill",
+                                                                "source": "${data}",
+                                                                "paddingBottom": "20dp"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "Image",
+                                "position": "absolute",
+                                "width": "100%",
+                                "height": "25%",
+                                "bottom": "0",
+                                "scale": "fill",
+                                "overlayGradient": {
+                                    "type": "linear",
+                                    "colorRange": [
+                                        "black",
+                                        "rgba(0,0,0,0.7)",
+                                        "transparent"
+                                    ],
+                                    "inputRange": [
+                                        0,
+                                        0.6,
+                                        1
+                                    ]
+                                },
+                                "source": "https://boilerbot-media-assets.s3.us-east-2.amazonaws.com/transparent.png"
+                            },
+                            {
+                                "type": "Container",
+                                "position": "absolute",
+                                "bottom": "12dp",
+                                "right": "12dp",
+                                "direction": "row",
+                                "items": [
+                                    {
+                                        "when": "${data.hasVideo == true}",
+                                        "type": "AlexaButton",
+                                        "buttonStyle": "ingress",
+                                        "buttonText": "Watch Video",
+                                        "opacity": "1",
+                                        "primaryAction": [
+                                            {
+                                                "type": "SendEvent",
+                                                "arguments": ["VIDEO_RESPONDER", "INTENT.StartWikihow"]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "AlexaButton",
+                                        "buttonStyle": "ingress",
+                                        "buttonText": "View Tutorial by Step",
+                                        "opacity": "1",
+                                        "primaryAction": [
+                                            {
+                                                "type": "SendEvent",
+                                                "arguments": ["WIKIHOW_SHOW_STEPS_RESPONDER", "INTENT.StartWikihow"]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "when": "${data.showUnknownResponder == true}",
+                                "type": "Container",
+                                "position": "absolute",
+                                "width": "100%",
+                                "height": "100%",
+                                "top": "0",
+                                "left": "0",
+                                "items": [
+                                    {
+                                        "type": "AlexaBackground",
+                                        "backgroundColor": "rgba(0,0,0,0.6)"
+                                    },
+                                    {
+                                        "type": "Container",
+                                        "width": "55%",
+                                        "height": "100%",
+                                        "alignSelf": "end",
+                                        "items": [
+                                            {
+                                                "type": "AlexaBackground"
+                                            },
+                                            {
+                                                "type": "Text",
+                                                "text": "Sorry I don't understand. You can try the following commands at this step:",
+                                                "fontSize": "@fontSizeMedium",
+                                                "padding": "24dp"
+                                            },
+                                            {
+                                                "type": "AlexaDivider"
+                                            },
+                                            {
+                                                "type": "Container",
+                                                "width": "100%",
+                                                "direction": "row",
+                                                "numbered": true,
+                                                "wrap": "wrap",
+                                                "unknownResponderImportantIndex": 2,
+                                                "data": [
+                                                    "\"<b>Go Back</b>\" - Go back to the search result page",
+                                                    "\"<b>Start Tutorial</b>\" - Go to step 1"
+                                                ],
+                                                "items": [
+                                                    {
+                                                        "type": "Frame",
+                                                        "paddingTop": "12dp",
+                                                        "paddingRight": "24dp",
+                                                        "paddingLeft": "24dp",
+                                                        "item": {
+                                                            "type": "Text",
+                                                            "text": "${data}",
+                                                            "fontSize": "@fontSizeMedium"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,80 @@
+.pagination-container{
+    display: flex;
+    justify-content: space-between
+}
+
+.function-name-badge{
+    display: inline-block;
+    font-size: 90%;
+}
+
+.parameter-badge{
+    display: inline-block;
+    word-wrap: break-word;
+    max-width: 400px;
+    font-size: 95%;
+}
+
+.show-conversation-button, .edit-instruction-button{
+    cursor: pointer;
+}
+
+.show-conversation-button:hover, .edit-instruction-button:hover{
+    text-decoration: underline;
+}
+
+.conv-metadata{
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    display: none;
+}
+
+.meta-data-field{
+    font-size: 1.25rem;
+}
+
+#conv-metadata-id{
+    word-break: break-all;
+}
+
+
+.line-from{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.line-body{
+    padding: 10px;
+    background-color: #007aff;
+    color: white;
+    border-radius: 15px;
+    border-top-left-radius: 0;
+    max-width: 80%;
+    cursor: pointer;
+}
+
+.bot-response, .line-detail{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 0;
+}
+
+.line-detail{
+    background-color: #f2f2f2;
+    color: black;
+}
+
+
+.align-left{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.align-right{
+    display: flex;
+    flex-direction: row-reverse;
+}

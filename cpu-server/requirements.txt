@@ -1,0 +1,10 @@
+attrs==23.2.0
+fastapi==0.85.1
+injector==0.20.1
+numpy==1.25.1
+pymongo==4.6.1
+Requests==2.31.0
+sentence_transformers==2.2.2
+thefuzz==0.20.0
+transformers==4.30.2
+uvicorn==0.23.0

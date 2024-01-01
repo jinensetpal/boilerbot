@@ -1,0 +1,8 @@
+[core]
+    no_scm = True
+    analytics = false
+['remote "origin"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/jinensetpal/boilerbot.s3
+['remote "http"']
+    url = https://dagshub.com/jinensetpal/boilerbot.dvc

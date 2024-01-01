@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Boiler Bot Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{url_for('protected', filename='annotation.css')}}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Boiler Bot Data Studio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Chats</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/stats">Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/api">API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/llm">LLM</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/dataset">Dataset</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/annotation">Annotation</a>
+                    </li>   
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        {% block content %}
+                        <a class="nav-link" aria-current="page" href="/logout">Hello dave!
+                            <small>Logout</small></a>
+                        <span id="user-name" style="display: none;">dave</span>
+                        {% endblock %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pt-3">
+        <div class="pagination-container">
+            <div id="pagination"></div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="input-group mb-3 go-to-page">
+                        <input type="text" class="form-control" placeholder="page #" id="jump-to-page-input">
+                        <button class="btn btn-outline-primary" type="button" onclick="jumpToPage()">Go</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="form-select" id="user-filter">
+                            <option value="All" selected>From All Annotators</option>
+                            <option value="Yifei">Yifei</option>
+                            <option value="Damin">Damin</option>
+                            <option value="Jacob">Jacob</option>
+                            <option value="Jinen">Jinen</option>
+                            <option value="Jack">Jack</option>
+                            <option value="Alex">Alex</option>
+                            <option value="Julia">Julia</option>
+                            <option value="Nadine">Nadine</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="form-select" id="category-filter" disabled>
+                            <option value="all" selected>All Category</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-primary" onclick="applyFilter()">Apply Filter</button>
+                </div>
+                <div class="col" style="text-align: right;">
+                    <button class="btn btn-outline-success" onclick="showAddInstructionModal()">New <i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+            
+        </div>
+       
+        <div class="table-container" style="max-height: calc(100vh - 140px); overflow-y: auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User Input</th>
+                        <th>Ideal Response (function | parameter)</th>
+                        <th>Annotator</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="instruction-list"></tbody>
+            </table>
+        </div>
+        
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="add-instruction-model" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="article-title">Add Instruction</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="annotation-id" hidden>
+
+                <div class="mb-3">
+                    <label for="new-conv-id" class="form-label">Linked Conversation Id</label>
+                    <input type="text" class="form-control" id="new-conv-id" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="new-context" class="form-label">Context</label>
+                    <textarea class="form-control" id="new-context" placeholder="optional"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="new-input" class="form-label">User Input</label>
+                    <input type="text" class="form-control" id="new-input" placeholder="Required">
+                </div>
+
+                <div class="mb-3">
+                    <label for="new-function" class="form-label">Reponse Function</label>
+                    <select class="form-select" id="new-function"></select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="new-response" class="form-label">Response Parameter</label>
+                    <textarea class="form-control" id="new-response" placeholder="Required"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="new-comment" class="form-label">Comments (Internal)</label>
+                    <textarea class="form-control" id="new-comment" placeholder="optional"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="new-annotator" class="form-label">Annotator</label>
+                    {% block annotator %}
+                    <input type="text" class="form-control" id="new-annotator" value="dave" disabled readonly>
+                    {% endblock %}
+                </div>
+                <div class="mb-3">
+                    <label for="new-category" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="new-category" value="Instruction Following" disabled readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="delete-instruction-btn" class="btn btn-danger" onclick="deleteInstruction()">Delete Instruction</button>
+                <button type="button" id="update-instruction-btn" class="btn btn-primary" onclick="updateInstruction()">Update Instruction</button>
+                <button type="button" id="add-instruction-btn" class="btn btn-success" onclick="addInstruction()">Add Instruction</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="show-conversation-model">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="article-title">Linked Conversation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="conv-metadata">
+                    <div class="meta-data-field">Conversation ID: <span id="conv-metadata-id"></span></div>
+                    <div class="meta-data-field">Total Turns: <span id="conv-metadata-turns"></span></div>
+                    <div class="meta-data-field">Rating: <span id="conv-metadata-rating"></span></div>
+                    <div class="meta-data-field">Start Time: <span id="conv-metadata-time"></span></div>
+                </div>
+                <div class="conv-lins">
+        
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="toast-container" style="position: absolute; bottom: 20px; display: flex; justify-content: center; width: 100%;">
+        <div id="success-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="me-auto text-success">Instruction Added Successfully!</strong>
+              <small class="text-muted">Just Now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            {% block add %}
+            <div class="toast-body">
+              Thank you, <strong>dave</strong> <br>The world is a better place because of you!
+            </div>
+            {% endblock %}
+        </div>
+
+        <div id="delete-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="me-auto text-primary">Instruction Deleted</strong>
+              <small class="text-muted">Just Now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            {% block delete %}
+            <div class="toast-body">
+              <strong>dave</strong>, I hope this wasn't a mistake!
+            </div>
+            {% endblock %}
+        </div>
+
+        <div id="update-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="me-auto text-primary">Instruction Updated</strong>
+              <small class="text-muted">Just Now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            {% block update %}
+            <div class="toast-body">
+              <strong>dave</strong>, next time try to get it right the first time!
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+        integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{url_for('protected', filename='utils.js')}}"></script>
+    <script src="{{url_for('protected', filename='annotation_utils.js')}}"></script>
+    <script src="{{url_for('protected', filename='annotation.js')}}"></script>
+</body>
+
+</html>

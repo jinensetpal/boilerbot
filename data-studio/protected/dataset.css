@@ -1,0 +1,17 @@
+.pagination-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+tr td:first-child{
+    cursor: pointer;
+}
+
+tr td:first-child:hover{
+    text-decoration: underline;
+}
+
+span.badge{
+    margin-right: 5px;
+    cursor: pointer;
+}

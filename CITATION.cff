@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+title: >-
+  BoilerBot: A Reliable Task-Oriented Chatbot Enhanced with
+  Large Language Models
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Yifei
+    family-names: Hu
+    email: hu381@purdue.edu
+    affiliation: Purdue University
+  - given-names: Jinen
+    family-names: Setpal
+    email: jsetpal@cs.purdue.edu
+    affiliation: Purdue University
+    orcid: 'https://orcid.org/0000-0002-8959-0451'
+  - given-names: Damin
+    family-names: Zhang
+    email: zhan4060@purdue.edu
+    affiliation: Purdue University
+  - given-names: Jacob
+    family-names: Zietek
+    email: jzietek@cs.purdue.edu
+    affiliation: Purdue University
+  - given-names: Jack
+    family-names: Lambert
+    email: lamberjb@purdue.edu
+    affiliation: Purdue University
+  - given-names: Alex
+    family-names: Gonzalez
+    email: gonza736@purdue.edu
+    affiliation: Purdue University
+  - given-names: Julia
+    family-names: Rayz
+    email: jtaylor1@purdue.edu
+    affiliation: Purdue University
+identifiers:
+  - type: url
+    value: >-
+      https://www.amazon.science/alexa-prize/proceedings/boilerbot-a-reliable-task-oriented-chatbot-enhanced-with-large-language-models
+    description: Publication
+  - type: url
+    value: >-
+      https://assets.amazon.science/8c/03/80c814a749f58e73a1aeda2ff282/boilerbot-tb2-final-2023.pdf
+    description: PDF
+repository-code: 'https://dagshub.com/jinensetpal/boilerbot/'
+abstract: >-
+  This paper outlines the design and deployment of
+  BoilerBot: a task-oriented multi- modal conversational
+  agent developed for the Alexa Prize TaskBot 2 competition.
+  BoilerBot features flexible response generation,
+  leveraging large language models (LLMs) to enable
+  adaptable user experiences. We discuss our novel
+  contributions towards advancing state-of-the-art
+  task-oriented conversational agents, highlighting
+  user-facing challenges and proposing fault-tolerant,
+  iterative solutions for carefully guided workflows that
+  enable Alexa users to maximize BoilerBot’s functionality.
+license: Apache-2.0

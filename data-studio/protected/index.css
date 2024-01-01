@@ -1,0 +1,100 @@
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #007aff; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0169d9; 
+}
+
+#conv-list-container{
+    padding-right: 5px;
+}
+
+#conv-list tbody tr:hover{
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+#conv-list tbody tr.selected{
+    background-color: #007aff;
+    color: white;
+}
+
+.list-conv-rating{
+    width: 25%;
+    text-align: center;
+    color: #ed9e13;
+}
+
+
+.list-conv-label{
+    width: 30%;
+}
+
+.conv-metadata{
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    display: none;
+}
+
+.meta-data-field{
+    font-size: 1.25rem;
+}
+
+#conv-metadata-id{
+    word-break: break-all;
+}
+
+.line-from{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.line-body{
+    padding: 10px;
+    background-color: #007aff;
+    color: white;
+    border-radius: 15px;
+    border-top-left-radius: 0;
+    max-width: 80%;
+    cursor: pointer;
+}
+
+.bot-response, .line-detail{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 0;
+}
+
+.line-detail{
+    background-color: #f2f2f2;
+    color: black;
+}
+
+
+.align-left{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.align-right{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
