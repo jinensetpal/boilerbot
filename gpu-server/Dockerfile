@@ -7,7 +7,7 @@ ENV PYTHONPATH=${FUNCTION_DIR}
 RUN apt update
 RUN apt install build-essential -y
 
-RUN pip install --upgrade pip wheel setuptools dvc
+RUN pip install --upgrade pip wheel setuptools dvc==3.37.0
 
 RUN mkdir -p ${FUNCTION_DIR}
 COPY requirements.txt ${FUNCTION_DIR}
