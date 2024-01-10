@@ -5,6 +5,12 @@ services:
     volumes:
       - transformers-cache:/.cache/huggingface/
       - torch-cache:/.cache/torch/
+      - pip-cache:/.cache/pip/
+      - dvc-cache:/var/task/.dvc/cache/
+    environment:
+      - TRANSFORMERS_CACHE=/.cache/huggingface/hub
+      - TORCH_HOME=/.cache/torch/
+      - XDG_CACHE_HOME=/.cache/
     links:
       - "gpu-server:gpuserver"
     ports:
@@ -17,6 +23,11 @@ services:
       - "8002:8000"
     volumes:
       - transformers-cache:/.cache/huggingface/
+      - pip-cache:/.cache/pip/
+      - dvc-cache:/var/task/.dvc/cache/
+    environment:
+      - TRANSFORMERS_CACHE=/.cache/huggingface/hub
+      - XDG_CACHE_HOME=/.cache/
     deploy:
       resources:
         reservations:
@@ -50,3 +61,10 @@ volumes:
       o: bind
       type: none
       device: ~/.cache/huggingface/
+  pip-cache:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ~/.cache/pip/
+  dvc-cache:

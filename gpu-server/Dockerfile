@@ -16,11 +16,7 @@ RUN pip install -r ${FUNCTION_DIR}requirements.txt
 RUN python3 -m spacy download en_core_web_trf
 
 COPY . ${FUNCTION_DIR}
-RUN dvc pull -r http
-
 WORKDIR ${FUNCTION_DIR}src
-ENV TRANSFORMERS_CACHE=/.cache/huggingface/hub
 
 EXPOSE 8000
-ENTRYPOINT [ "uvicorn" ]
-CMD [ "main:app", "--host", "0.0.0.0", "--port", "8000" ]
+ENTRYPOINT [ "../run.sh" ]
